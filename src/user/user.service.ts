@@ -1,22 +1,19 @@
 import { Injectable } from "@nestjs/common";
 import { CreateUserDto } from "./dto/create.user.dto";
+import { InjectModel } from "@nestjs/sequelize";
+import { User } from "./user.model";
 
 @Injectable()
 export class UserService {
-  private users = [];
-
-  getAll() {
-    return this.users;
+  constructor(@InjectModel(User) private userRepository: typeof User) {
   }
 
-  createUser(user: CreateUserDto) {
-    this.users.push({
-      ...user,
-      id: new Date().valueOf()
-      // id: this.users[this.users.length -1].id +1
-    });
-    return this.users;
-
-    // return this.users.filter(this.users === this.users ) // ? Сделать динамичное изменение юзера
+ async getAll() {
+    return this.userRepository.findAll();
   }
+
+ async createUser(user: CreateUserDto) {
+   return this.userRepository.create(user);
+
+  };
 }
