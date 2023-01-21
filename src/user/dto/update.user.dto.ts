@@ -10,11 +10,10 @@ import {
 } from "class-validator";
 import { ApiProperty } from "@nestjs/swagger";
 
-export class CreateUserDto {
+export class UpdateUserDto {
 
   @ApiProperty({ example:'Liza', required: false})
   @IsString()
-  @IsOptional() // Проверяет, отсутствует ли значение, и если да, то игнорирует все валидаторы.
   firstName: string;
 
   @ApiProperty({ example:'Holenko', required: false})

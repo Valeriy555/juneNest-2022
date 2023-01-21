@@ -3,6 +3,7 @@ import { CreateUserDto } from "./dto/create.user.dto";
 import { UserService } from "./user.service";
 import { ApiQuery, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { User } from "./user.model";
+import { UpdateUserDto } from "./dto/update.user.dto";
 
 @ApiTags('Users')
 @Controller("users")
@@ -24,14 +25,14 @@ export class UserController {
 
   @Get("/:id")
   @ApiQuery({name:'id', example:'kjzn-25fj12345'})
-  getOneUserById(@Param("id") id: string) {
-    return `get user by id: ${id}`;
+  getOneUserById(@Param("id") id: number) {
+    return this.userService.getOneUser(id);
   }
 
-  @Put("/:id")
-  updateUser() {
-    return "update users";
-  }
+  // @Put("/:id")
+  // updateUserById(@Body() updateUserDto:UpdateUserDto, @Param("id") id: string ) {
+  //   return this.userService.updateUser(updateUserDto, id);
+  // }
 
   @Delete("/:id")
   deleteUser(){}
