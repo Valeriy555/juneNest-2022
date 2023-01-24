@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
 import { CreateUserDto } from "./dto/create.user.dto";
 import { UserService } from "./user.service";
-import { ApiQuery, ApiResponse, ApiTags } from "@nestjs/swagger";
+import { ApiBadRequestResponse, ApiQuery, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { User } from "./user.model";
 import { UpdateUserDto } from "./dto/update.user.dto";
 
@@ -17,22 +17,21 @@ export class UserController {
     return this.userService.getAll();
   }
 
+  @ApiBadRequestResponse({status: 400, type: 'Bad query param', })
   @ApiResponse({status: 201, type: User })
   @Post()
   createUser(@Body() createUserDto: CreateUserDto) {
     return this.userService.createUser(createUserDto);
   }
 
-  @Get("/:id")
   @ApiQuery({name:'id', example:'kjzn-25fj12345'})
-  getOneUserById(@Param("id") id: number) {
-    return this.userService.getOneUser(id);
+  @Get("/:id")
+  getOneUserById(@Param("id") id: string) {
+    return `get user id ${id}`;
   }
 
-  // @Put("/:id")
-  // updateUserById(@Body() updateUserDto:UpdateUserDto, @Param("id") id: string ) {
-  //   return this.userService.updateUser(updateUserDto, id);
-  // }
+  @Put("/:id")
+  updateUserById( ) {}
 
   @Delete("/:id")
   deleteUser(){}
